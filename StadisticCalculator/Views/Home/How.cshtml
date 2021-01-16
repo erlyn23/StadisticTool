@@ -1,0 +1,269 @@
+﻿@{
+    ViewData["Title"] = "¿Cómo se hace la tabla?";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="uk-card-title">¿Cómo hacer una tabla de frecuencia?</h3>
+            <p class="text-justify">Hacer una tabla de frecuencia conlleva una serie de pasos a seguir, y es por eso que esta sección tiene el objetivo de enseñarte a cómo hacer tu tabla de frecuencia paso a paso.</p>
+
+            <p class="uk-text-justify"><span class="uk-text-bold">Ejercicio planteado: </span>Supongamos que tenemos los siguientes datos 0.2, 8.4, 14.3, 6.5, 3.4, 4.6, 9.1, 4.3, 3.5, 1.5, 6.4, 15.2, 16.1, 19.8, 5.4, 12.1, 9.6, 8.7, 12.1, 3.2, se nos pide crear la tabla de frecuencia a partir de estos datos.</p>
+
+            <p class="uk-text-justify"><span class="uk-text-bold">Paso 1: </span>El primer paso es organizar los números dado de forma ascendente de menor a mayor, por ejemplo, en este caso nos quedaría así: 0.2,1.5,3.2,3.4,3.5,4.3,4.6,5.4,6.4,6.5,8.4,8.7,
+                                       <br />9.1,9.6,12.1,12.1,14.3,15.2,16.1,19.8. Así se te hará más fácil contar.</p>
+
+            <p class="uk-text-justify">
+                <span class="uk-text-bold">Paso 2: </span>Teniendo los datos organizados, tenemos que determinar ciertos parámetros que nos van a servir para organizar nuestra tabla:
+                <ul>
+                    <li>R = Vmax - Vmin - El rango se obtiene restando la cifra máxima con la cifra mínima, en este caso sería: R = 19.8 - 0.2 = 19.6. El rango nos servirá para calcular la amplitud que la veremos más adelante.</li>
+                    <li>k = 1 + 3.322log(n) - El intervalo de clase suele venir en el ejercicio, pero si no se encuentra en el mismo, pues con la fórmula mostrada es fácil de calcular, donde n significa el número total de datos, entonces nos quedaría: k = 1 + 3.322log(20) = 5.322, este resultado obtenido es nuestro k y lo podemos redondear, entonces sería k = 5. Esto nos da el número de filas que debe tener la tabla excluyendo la fila de los encabezados y la fila de los totales.</li>
+                    <li>A = R / k - La amplitud se obtiene dividiendo el rango entre el intervalo de clase, en este caso sería A = 19.6 / 5 = 3.92. Esto se puede redondear y nos queda A = 4. El intervalo nos da el de cuánto en cuánto tenemos que ir contando los valores, para ir aumentándolos. </li>
+                </ul>
+            </p>
+
+            <p class="uk-text-justify">
+                <span class="uk-text-bold">Paso 3: </span>Ya tenemos los parámetros iniciales que fueron R = 19.6, k = 5 y A = 4. Es hora de dibujar nuestra tabla con lo que ya tenemos. La primera columna de la tabla, corresponde al intervalo de clases, que no es más que tomar el valor mínimo e irle sumando la amplitud (A = 4). Nos quedaría algo como esto: <br />
+
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th style="color: #212529; font-weight: bold;">Intervalo de clase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[0-4)</td>
+                        </tr>
+                        <tr>
+                            <td>[4-8)</td>
+                        </tr>
+                        <tr>
+                            <td>[8-12)</td>
+                        </tr>
+                        <tr>
+                            <td>[12-16)</td>
+                        </tr>
+                        <tr>
+                            <td>[16-20)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                Como podemos observar los números van en aumento de 4 en 4, a esto se le conoce como intervalos de clase.
+            </p>
+
+            <p class="uk-text-justify">
+                <span class="uk-text-bold">Paso 4: </span>El siguiente paso es encontrar la marca de clase, esta nos servirá más adelante para obtener otros datos, y se consigue sumando los límites superior e inferior de cada intervalo y luego dividiéndolos entre 2, por ejemplo, el primer intervalo es [0-4), entonces se suman los límites 0 + 4 = 4 y luego se divide entre 2, Xi = 4 / 2 = 2, la marca de clase de este intervalo es 2. Llenando los demás datos tenemos lo siguiente:
+                <br>
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th style="color: #212529; font-weight: bold;">Intervalo de clase</th>
+                            <th style="color: #212529; font-weight: bold;">x<span style="font-size: 10px;">i</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[0-4)</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>[4-8)</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>[8-12)</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>[12-16)</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>[16-20)</td>
+                            <td>18</td>
+                        </tr>
+                    </tbody>
+                </table><br>
+
+                Una forma de percatarnos de que todo va bien es si la marca de clase aumenta de acuerdo a la amplitud, en este caso sería aumento de 4 en 4, 2 + 4 = 6 + 4 = 10 + 4 = 14, y así sucesivamente.
+            </p>
+
+            <p class="uk-text-justify">
+                <span class="uk-text-bold">Paso 5: </span> Ahora vamos a obtener lo que conocemos como frecuencia absoluta (f<span style="font-size: 10px;">i</span>). Esta se obtiene contando los datos que van desde el número más bajito del intervalo hasta el número mayor del intervalo sin incluir el último número, porque este se contará en el siguiente intervalo, por ejemplo, si tenemos el intervalo [0-4), entonces contaremos las repeticiones de números que estén entre 0 y 3. Que en este caso son 5, y hacemos lo mismo con los demás, la tabla nos irá quedando así:
+                <br>
+
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th style="color: #212529; font-weight: bold;">Intervalo de clase</th>
+                            <th style="color: #212529; font-weight: bold;">x<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">i</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[0-4)</td>
+                            <td>2</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>[4-8)</td>
+                            <td>6</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>[8-12)</td>
+                            <td>10</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>[12-16)</td>
+                            <td>14</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>[16-20)</td>
+                            <td>18</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td>20</td>
+                        </tr>
+                    </tbody>
+                </table><br>
+
+                Ya con esto tenemos la frecuencia absoluta de de cada intervalo, para comprobar que esto es correcto sumamos los números y el total tiene que darnos exactamente la misma cantidad de números que tenemos en el ejercicio en este caso es 20.
+            </p>
+
+            <p class="uk-text-justify">
+                <span class="uk-text-bold">Paso 6: </span> El siguiente paso es obtener la frecuencia relativa (f<span style="font-size: 10px;">r</span>), para calcular esta se debe dividir la frecuencia absoluta entre el total de números, por ejemplo, para la primera, sería dividir 5 / 20 y eso nos daría 0.25. Entonces haciendo este paso nos quedaría lo siguiente:
+                <br>
+
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th style="color: #212529; font-weight: bold;">Intervalo de clase</th>
+                            <th style="color: #212529; font-weight: bold;">x<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">r</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[0-4)</td>
+                            <td>2</td>
+                            <td>5</td>
+                            <td>0.25</td>
+                        </tr>
+                        <tr>
+                            <td>[4-8)</td>
+                            <td>6</td>
+                            <td>5</td>
+                            <td>0.25</td>
+                        </tr>
+                        <tr>
+                            <td>[8-12)</td>
+                            <td>10</td>
+                            <td>4</td>
+                            <td>0.2</td>
+                        </tr>
+                        <tr>
+                            <td>[12-16)</td>
+                            <td>14</td>
+                            <td>4</td>
+                            <td>0.2</td>
+                        </tr>
+                        <tr>
+                            <td>[16-20)</td>
+                            <td>18</td>
+                            <td>2</td>
+                            <td>0.1</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td>20</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table><br>
+
+                Como siempre hay una forma de comprobar si esto es correcto o no, el total de estos números debe dar exactamente 1 o 0.99, con esto comprobamos que vamos por el camino correcto.
+            </p>
+
+            <p class="uk-text-justify">
+                <span class="uk-text-bold">Paso 7: </span> El último paso para terminar de construir nuestra tabla es obtener la frecuencia total acumulada (F), la misma se obtiene sumando la frecuencia absoluta siguiente con la anterior a partir de la segunda fila, por ejemplo, en la primera fila tenemos un 5, se pone el 5 en la primera fila, y en la segunda se suma esa frecuencia absoluta con el 5 anterior, entonces en este caso sería, por ejemplo 5 + 5 = 10, entonces en la segunda casilla iría un 10. Veamos cómo queda la tabla:
+                <br>
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th style="color: #212529; font-weight: bold;">Intervalo de clase</th>
+                            <th style="color: #212529; font-weight: bold;">x<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">r</span></th>
+                            <th style="color: #212529; font-weight: bold;">F</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[0-4)</td>
+                            <td>2</td>
+                            <td>5</td>
+                            <td>0.25</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>[4-8)</td>
+                            <td>6</td>
+                            <td>5</td>
+                            <td>0.25</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>[8-12)</td>
+                            <td>10</td>
+                            <td>4</td>
+                            <td>0.2</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>[12-16)</td>
+                            <td>14</td>
+                            <td>4</td>
+                            <td>0.2</td>
+                            <td>18</td>
+                        </tr>
+                        <tr>
+                            <td>[16-20)</td>
+                            <td>18</td>
+                            <td>2</td>
+                            <td>0.1</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td>20</td>
+                            <td>1</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table><br>
+
+                La forma de comprobar si esto es correcto es verificar si el último número es igual al total de la frecuencia absoluta, si es igual todo está correcto, si no, revisa tus datos nuevamente.
+                <br>
+
+                Con esto terminamos de realizar nuestra tabla de frecuencias, con un ejemplo práctico te mostré cómo crearla tú mismo y así poder usar la calculadora para comprobar tus procesos.
+            </p>
+
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

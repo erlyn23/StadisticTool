@@ -1,0 +1,134 @@
+﻿@model StadisticCalculator.Models.ExerciseParams
+@{
+    ViewData["Title"] = "Generar tabla de frequencia";
+}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="text-center"><h3 class="uk-card-title">Generadora de tabla de frecuencia</h3></div>
+            <div class="text-justify">
+                Este apartado sirve para generar tablas de frecuencia, a partir de unos datos dados, aségurate de proveer los datos correctamente y como se indica en el formulario, y con esto podrás generar una tabla de frecuencia, que va a servir para resolver tus ejercicios de estadística. Está centrada a esas personas que ya saben hacer la tabla y quieren comprobar sus resultados y/o también para esas que quieren ahorrar procesos porque necesitan sacar otros datos aparte de la tabla.
+            </div>
+            <div class="text-center"><h3 class="uk-card-title">Ingresar Datos: </h3></div>
+            <form asp-action="Index">
+                <div class="form-group">
+                    <label for="Numbers">Ingresa los números:</label>
+                    <small class="text-white">Nota: Si son decimales, el separador decimal debe ser con ( . )</small>
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" asp-for="Numbers" class="uk-textarea" required></textarea>
+                    <p class="text-danger">@Html.ValidationMessageFor(m => m.Numbers)</p>
+                </div>
+                <div class="form-group">
+                    <label for="ClassInterval">Ingresa el intervalo de clase (k): </label>
+                    <small class="text-white">Nota: Si el ejercicio no te provee esta información coloca un 0</small>
+                    <input type="number" id="ClassInterval" asp-for="ClassInterval" class="uk-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="Delimiter">Delimitador o separador de los números:</label>
+                    <small class="text-white"> (ej: ; , o -)</small>
+                    <input type="text" id="Delimiter" asp-for="Delimiter" class="uk-input" maxlength="1" required />
+                    <p class="text-danger">@Html.ValidationMessageFor(m => m.Delimiter)</p>
+                </div>
+                <div class="form-check-inline">
+                    <input type="checkbox" asp-for="HasArithmeticMedia" value="true" class="uk-checkbox"> &nbsp;
+                    <label for="ArithmeticMedia">Calcular media aritmética</label>
+                </div>
+                <div class="form-check-inline">
+                    <input type="checkbox" asp-for="HasMedian" value="true" class="uk-checkbox"> &nbsp;
+                    <label for="Median">Calcular mediana</label>
+                </div>
+                <div class="form-check-inline">
+                    <input type="checkbox" asp-for="HasFashion" value="true" class="uk-checkbox"> &nbsp;
+                    <label for="Median">Calcular moda</label>
+                </div>
+                <div class="form-check-inline">
+                    <input type="checkbox" asp-for="HasVariance" value="true" class="uk-checkbox"> &nbsp;
+                    <label for="Fashion">Calcular varianza</label>
+                </div>
+                <div class="form-check-inline">
+                    <input type="checkbox" asp-for="HasStandardDesviation" value="true" class="uk-checkbox"> &nbsp;
+                    <label for="ArithmeticMedia">Calcular desviación estándar</label>
+                </div>
+                <div class="form-check-inline">
+                    <input type="checkbox" asp-for="HasVariationCoefficent" value="true" class="uk-checkbox"> &nbsp;
+                    <label for="Median">Calcular coeficiente de variación</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="uk-button-primary btn-block">Generar tabla</button>
+                </div>
+                @if (ViewBag.Error != null)
+                {
+                    <p class="text-danger">@ViewBag.Error</p>
+                }
+
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    @if (ViewBag.Success != null && ViewBag.Success)
+    {
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="text-center"><h3 class="uk-card-title">Tabla generada:</h3></div>
+                <table class="uk-table uk-table-hover">
+                    <thead>
+                        <tr>
+                            <th style="color: #212529; font-weight: bold;">Intervalos</th>
+                            <th style="color: #212529; font-weight: bold;">x<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">i</span></th>
+                            <th style="color: #212529; font-weight: bold;">f<span style="font-size: 10px;">r</span></th>
+                            <th style="color: #212529; font-weight: bold;">F</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Intervals.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.Intervals[i]</td>
+                                <td>@Model.ClassMarks[i]</td>
+                                <td>@Model.AbsolutesFrequencies[i]</td>
+                                <td>@Model.RelativeFrequencies[i]</td>
+                                <td>@Model.TotalAcumulatedFrequencies[i]</td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td>@Model.AbsolutesFrequencies.Sum()</td>
+                            <td>@Math.Round(Model.RelativeFrequencies.Sum())</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @if (Model.ArithmeticMedia != 0)
+                {
+                    <p><span class="uk-text-bold">Media Aritmética:</span> @Model.ArithmeticMedia</p>
+                }
+                @if (Model.Median != 0)
+                {
+                    <p><span class="uk-text-bold">Mediana:</span> @Model.Median</p>
+                }
+                @if (Model.Fashion != 0)
+                {
+                    <p><span class="uk-text-bold">Moda:</span>@Model.Fashion</p>
+                }
+                @if (Model.Variance != 0)
+                {
+                    <p><span class="uk-text-bold">Varianza:</span> @Model.Variance</p>
+                }
+                @if (Model.StandardDesviation != 0)
+                {
+                    <p><span class="uk-text-bold">Desviación estándar:</span> @Model.StandardDesviation</p>
+                }
+                @if (Model.VariationCoefficent != 0)
+                {
+                    <p><span class="uk-text-bold">Coeficiente de variación:</span> @Model.VariationCoefficent</p>
+                }
+            </div>
+        </div>
+    }
+</div>

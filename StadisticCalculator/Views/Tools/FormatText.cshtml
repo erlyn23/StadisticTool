@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Formatear texto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="text-center"><h3 class="uk-card-title">Herramienta para formatear texto: </h3></div>
+            <div class="text-justify">
+                <p>Con esta herramienta puedes formatear los números, si los números los copiaste de otros ejercicios de ejemplo y tienen formatos varios que se te hacen incómodo organizar y quitar espaciados y demás, esta herramienta es tu opción. Con esto puedes formatear los números por ejemplo si están separadas con tabulación (ej: 1     2) es un espacio grande, puedes seleccionar la opción tabulación y esto le quitará este espaciado. Si está separado por saltos de línea (ej: 1 <br /> 2) también puedes seleccionar esta opción para quitarla. Y por último, si tienen espacios puedes quitarle los espacios si así lo deseas seleccionando esa opción también.</p>
+            </div>
+            <div class="text-center"><h3 class="uk-card-title">Ingresar Datos: </h3></div>
+            <form asp-action="FormatText">
+                <div class="form-group">
+                    <label for="Numbers">Ingresa los números:</label>
+                    <small class="text-white">Nota: Si son decimales, el separador decimal debe ser con ( . )</small>
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" name="numbers" class="uk-textarea" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Options">¿Qué quieres quitar?: </label>
+                    <select class="uk-select" name="option" id="Options">
+                        <option value="tab">Tabulación</option>
+                        <option value="breakline">Salto de línea</option>
+                        <option value="space">Espaciado</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="uk-button-primary btn-block">Formatear Texto</button>
+                </div>
+            </form>
+            @if (ViewBag.Error != null)
+            {
+                <p class="text-danger">@ViewBag.Error</p>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Numbers">Texto formateado: </label>
+                @if (ViewBag.FormattedText != null)
+                {
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" class="uk-textarea" readonly>
+@ViewBag.FormattedText
+                    </textarea>
+                }
+                else
+                {
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" class="uk-textarea" readonly></textarea>
+                }
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+
+

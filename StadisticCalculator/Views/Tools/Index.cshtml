@@ -1,0 +1,67 @@
+﻿@model StadisticCalculator.Models.ExerciseParams
+@{
+    ViewData["Title"] = "Organizar números";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="text-center"><h3 class="uk-card-title">Herramienta para ordenar números: </h3></div>
+            <div class="text-justify">
+                <p>Con esta herramienta puedes organizar los números de menor a mayor o de mayor a menor, es una herramienta útil para tus ejercicios de estadística, ya que si tienes muchos datos se te hará difícil organizarlos tú mismo uno por uno, con esta herramienta obtienes resultados precisos y exactos.</p>
+            </div>
+            <div class="text-center"><h3 class="uk-card-title">Ingresar Datos: </h3></div>
+            <form asp-action="Index">
+                <div class="form-group">
+                    <label for="Numbers">Ingresa los números:</label>
+                    <small class="text-white">Nota: Si son decimales, el separador decimal debe ser con ( . )</small>
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" asp-for="@Model.Numbers" class="uk-textarea" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Delimiter">Delimitador o separador de los números:</label>
+                    <small class="text-white"> (ej: ; , o -)</small>
+                    <input type="text" id="Delimiter" asp-for="@Model.Delimiter" class="uk-input" maxlength="1" required />
+                </div>
+                <div class="form-check-inline">
+                    <input type="radio" id="isAscending" asp-for="@Model.IsAscending" value="true" checked class="uk-radio"> &nbsp;
+                    <label>Ordenar de forma ascendente</label>
+                </div>
+                <div class="form-check-inline">
+                    <input type="radio" id="isAscending" asp-for="@Model.IsAscending" value="false" class="uk-radio"> &nbsp;
+                    <label>Ordenar de forma descendente</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="uk-button-primary btn-block">Ordenar números</button>
+                </div>
+            </form>
+            @if (ViewBag.Error != null)
+            {
+                <p class="text-danger">@ViewBag.Error</p>
+            }
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Numbers">Números ordenados: </label>
+                @if (ViewBag.SortedNumbers != null)
+                {
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" class="uk-textarea" required>
+@ViewBag.SortedNumbers
+                    </textarea>
+                }
+                else
+                {
+                    <textarea id="Numbers" cols="30" rows="5" style="resize: none;" class="uk-textarea" required></textarea>
+                }
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
